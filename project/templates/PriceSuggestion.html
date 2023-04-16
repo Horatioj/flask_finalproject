@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <!-- Navbar Start -->
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Services</h1>
+                    <a href="" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="{{url_for('query.service')}}" class="h5 text-white">Services</a>
+                </div>
+            </div>
+        </div>
+    <!-- Navbar End -->
+
+<h1>Suggested Selling Price Calculator</h1>
+<form>
+    <label for="costing">Costing ($):</label>
+    <input type="number" id="costing" name="costing" step="0.01" required><br><br>
+
+    <label for="profit-margin">Profit Margin (%):</label>
+    <input type="number" id="profit-margin" name="profit-margin" step="0.01" required><br><br>
+
+    <label for="selling-price">Selling Price ($):</label>
+    <input type="text" id="selling-price" name="selling-price" step="0.01" value="OPTIONAL"><br><br>
+
+    <button type="button" onclick="calculate()">Calculate</button>
+</form>
+
+<h2>Suggested Selling Price:<br> <span id="result"></span><br></h2>
+<p id="message"<br></p>
+
+<script>
+    function calculate() {
+        const costing = parseFloat(document.getElementById('costing').value);
+        const profitMargin = parseFloat(document.getElementById('profit-margin').value);
+        let sellingPrice = document.getElementById('selling-price').value;
+
+        if (isNaN(costing) || isNaN(profitMargin)) {
+            alert("Please enter numbers!");
+            return;
+        }
+
+        if (sellingPrice) {
+            sellingPrice = parseFloat(sellingPrice);
+        }
+
+        const suggestedSellingPrice = costing * ((100 + profitMargin) / 100);
+
+        let resultMessage = "";
+        if (!sellingPrice) {
+            resultMessage = "The suggested selling price is: " + suggestedSellingPrice;
+        } else if (sellingPrice == suggestedSellingPrice) {
+            resultMessage = "The selling price is REASONABLE.";
+        } else if (sellingPrice > suggestedSellingPrice) {
+            resultMessage = "The selling price is NOT REASONABLE as it exceeded the profit margin, the suggested selling price is: $" + suggestedSellingPrice.toFixed(2);
+        } else {
+            resultMessage = "The selling price is NOT REASONABLE as it has not enough profit margin, the suggested selling price is: $" + suggestedSellingPrice.toFixed(2);
+        }
+
+        document.getElementById("result").innerHTML = resultMessage;
+    }
+</script>
+{% endblock %}

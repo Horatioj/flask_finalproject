@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <!-- Navbar Start -->
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Services</h1>
+                    <a href="" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="{{url_for('query.service')}}" class="h5 text-white">Services</a>
+                </div>
+            </div>
+        </div>
+    <!-- Navbar End -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='search.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles_search.css') }}">
+
+<h1>Search Filter:</h1>
+<form>
+    <ion-icon name="search-outline"></ion-icon>
+    <input type="text" name="query" placeholder="name...">
+    <h1>Category:</h1>
+    
+    <div class="container-center">
+    <div class="categories">
+        {% for category in categories %}
+            <div class="col-md-2" style="display: inline-block;">
+                <label>
+                    <input type="checkbox" name="category" value="{{ category }}">
+                    <span style="display: inline;">{{ category }}</span>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    <br>
+    <select name="sort">
+        <option value="">Sort by</option>
+        <option value="totalSales_volume">totalSales_volume</option>
+        <option value="fans_number">fans_number</option>
+        <option value="totalSales_revenue">totalSales_revenue</option>
+    </select>  
+    <br>
+    
+    <br>
+    <input type="submit" value="Search">
+    <br><br>
+    <input type="reset" value="Reset">
+</form>
+<div id="results"></div>
+
+
+
+{% endblock %}

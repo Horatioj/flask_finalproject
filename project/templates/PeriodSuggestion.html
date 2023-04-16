@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+    <script>
+        function disableOtherCheckboxes(checkbox) {
+            var checkboxes = document.getElementsByName("input_value");
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] !== checkbox) {
+                    checkboxes[i].disabled = checkbox.checked;
+                    if (checkbox.disabled) {
+                        checkboxes[i].parentNode.style.color = "white";
+                    } else {
+                        checkboxes[i].parentNode.style.color = "black";
+                    }
+                }
+            }
+        }
+
+        function resetForm() {
+            var checkboxes = document.getElementsByName("input_value");
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = false;
+                checkboxes[i].disabled = false;
+                checkboxes[i].parentNode.style.color = "black";
+            }
+            var result = document.getElementById("result");
+            if (result) {
+                result.parentNode.removeChild(result);
+            }
+            
+        }
+    
+    </script>
+<body>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+	</br>
+	<h1>Period Suggestion</h1>
+	<form method="POST" action="{{ url_for('query.PeriodSuggestion')}}">
+		<h2>Category:</h2>
+        <input type="checkbox" id="input_value" name="input_value" value="3CDigital" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value">3CDigital</label>
+        <input type="checkbox" id="input_value2" name="input_value" value="Accessories" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value2">Accessories</label>
+        <input type="checkbox" id="input_value3" name="input_value" value="Apparel" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value3">Apparel</label>
+        <input type="checkbox" id="input_value4" name="input_value" value="Automobile Parts" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value4">Automobile Parts</label>
+        <input type="checkbox" id="input_value5" name="input_value" value="Baby Care Products" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value5">Baby Care Products</label>
+        <input type="checkbox" id="input_value6" name="input_value" value="Beauty & Skincare" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value6">Beauty & Skincare</label>
+        <input type="checkbox" id="input_value7" name="input_value" value="Book/Audiovisual" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value7">Book/Audiovisual</label>
+        <input type="checkbox" id="input_value8" name="input_value" value="Food & Beverages" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value8">Food & Beverages</label>
+        <input type="checkbox" id="input_value9" name="input_value" value="Fresh Produces" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value9">Fresh Produces</label><br>
+        <input type="checkbox" id="input_value10" name="input_value" value="Furnitures/Materials" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value10">Furnitures/Materials</label>
+        <input type="checkbox" id="input_value11" name="input_value" value="Gifts" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value11">Gifts</label>
+        <input type="checkbox" id="input_value12" name="input_value" value="Healthcare" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value12">Healthcare</label>
+        <input type="checkbox" id="input_value13" name="input_value" value="Household Products" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value13">Household Products</label>
+        <input type="checkbox" id="input_value14" name="input_value" value="Jewelry" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value14">Jewelry</label>
+        <input type="checkbox" id="input_value15" name="input_value" value="Kitchen Appliances" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value15">Kitchen Appliances</label>
+        <input type="checkbox" id="input_value16" name="input_value" value="Local Life" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value16">Local Life</label>
+        <input type="checkbox" id="input_value17" name="input_value" value="Pet" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value17">Pet</label>
+        <input type="checkbox" id="input_value18" name="input_value" value="Plants" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value18">Plants</label>
+        <input type="checkbox" id="input_value19" name="input_value" value="Shoes/Bags" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value19">Shoes/Bags</label>
+        <input type="checkbox" id="input_value20" name="input_value" value="Sports" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value20">Sports<br>
+        <input type="checkbox" id="input_value21" name="input_value" value="Textiles" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value21">Textiles</label>
+        <input type="checkbox" id="input_value22" name="input_value" value="Toys/Musical Instrument" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value22">Toys/Musical Instrument</label>
+        <input type="checkbox" id="input_value23" name="input_value" value="Used Goods" onclick="disableOtherCheckboxes(this)">
+        <label for="input_value23">Used Goods</label><br><br>
+        <label>Time Available to Stream:</label><br>
+		<select name="start_time">
+			<option value="24">0:00</option> 
+			<option value="1">1:00</option> 
+			<option value="2">2:00</option> 
+			<option value="3">3:00</option> 
+			<option value="4">4:00</option> 
+			<option value="5">5:00</option> 
+			<option value="6">6:00</option>  
+			<option value="7">7:00</option> 
+			<option value="8">8:00</option> 
+			<option value="9">9:00</option> 
+			<option value="10">10:00</option> 
+			<option value="11">11:00</option> 
+			<option value="12">12:00</option> 
+			<option value="13">13:00</option> 
+			<option value="14">14:00</option> 
+			<option value="15">15:00</option> 
+			<option value="16">16:00</option> 
+			<option value="17">17:00</option> 
+			<option value="18">18:00</option> 
+			<option value="19">19:00</option> 
+			<option value="20">20:00</option>
+			<option value="21">21:00</option> 
+			<option value="22">22:00</option> 
+			<option value="23">23:00</option> 
+		</select>
+        <label>~</label>
+		<select name="end_time"> 
+			<option value="24">0:00</option> 
+			<option value="1">1:00</option> 
+			<option value="2">2:00</option> 
+			<option value="3">3:00</option> 
+			<option value="4">4:00</option> 
+			<option value="5">5:00</option> 
+			<option value="6">6:00</option>  
+			<option value="7">7:00</option> 
+			<option value="8">8:00</option> 
+			<option value="9">9:00</option> 
+			<option value="10">10:00</option> 
+			<option value="11">11:00</option> 
+			<option value="12">12:00</option> 
+			<option value="13">13:00</option> 
+			<option value="14">14:00</option> 
+			<option value="15">15:00</option> 
+			<option value="16">16:00</option> 
+			<option value="17">17:00</option> 
+			<option value="18">18:00</option> 
+			<option value="19">19:00</option> 
+			<option value="20">20:00</option>
+			<option value="21">21:00</option> 
+			<option value="22">22:00</option> 
+			<option value="23">23:00</option> 
+		</select>
+		<br><br>
+        <input type="submit" value="Send">
+        <input type="reset" value="Reset" onclick="resetForm()">
+	</form>
+    {% if result %}
+        <br><br>
+        <p id="result">{{ result }} </p>
+    {% endif %}
+	</body>
+</html>
+{% endblock %}

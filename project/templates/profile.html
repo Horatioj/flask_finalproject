@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="display-6 text-center">
+  Welcome, {{ username }}!
+</h1>
+
+<p class="text-center">
+  Redirecting in <span id="countdown">2</span> seconds...
+</p>
+
+<script>
+  let timeLeft = 2;
+  const countdownElement = document.getElementById("countdown");
+
+  function updateCountdown() {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      redirectToNewUrl();
+    } else {
+      setTimeout(updateCountdown, 1000);
+    }
+  }
+
+  function redirectToNewUrl() {
+    window.location.href = '{{url_for('query.index')}}';
+  }
+
+  setTimeout(updateCountdown, 1000);
+</script>
+
+
+{% endblock %}

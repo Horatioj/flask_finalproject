@@ -1,0 +1,75 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Administrator System{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+			</button>
+			<a href="/" class="navbar-brand">Users Management</a>
+		</div>
+		<div class="navbar-collapse collapse">				
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{{url_for('ad.admin_add')}}">Add Users</a></li>
+		        <li><a href="{{url_for('auth.logout')}}">Logout</a></li>
+		    </ul>
+		    <ul class="nav navbar-nav">
+				<li><a href="{{url_for('main.index')}}">Home</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	{% for message in get_flashed_messages() %}
+		<div class="alert alert-warning">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{ message }}
+		</div>
+	{% endfor %}
+	<div class="table-responsive">
+	<table class="table table-bordered table-hover table-striped table-condensed">
+		<thead>
+			<th>id</th>
+			<th>username</th>
+			<th>email</th>
+			<th>password</th>
+			<th>Operation</th>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.id }}</td>
+				<td>{{ user.username }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.password }}</td>
+				<td>
+					<button class="delete" onclick="url_for('ad.admin_delete')">delete</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+$(document).ready(function() {
+	$('.delete').click(function() {
+		$.post('/delete', {id: $(this).parent().siblings().first().text()});
+		$(this).parent().parent().remove();
+	});
+});
+</script>
+{% endblock %}
