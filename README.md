@@ -2,7 +2,7 @@
 ```sh
 $ git clone https://github.com/Horatioj/flask_finalproject.git
 $ cd flask_finalproject
-$ env\Scripts\activate
+$ pip install -r requirements.txt
 $ flask run
 ```
 
