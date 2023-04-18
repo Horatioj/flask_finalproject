@@ -9,7 +9,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from . import db
 from .models import User, OAuth
 
-github_blueprint = make_github_blueprint(client_id = 'ac3fb707592bbcf390d2', client_secret = '595ababb73b9b04373320ced87d7bd979a03d05e')
+github_blueprint = make_github_blueprint(client_id = 'ac3fb707592bbcf390d2', client_secret = 'e221f768225f189584380bd91ffa0df0edc54c06')
 
 google_blueprint = make_google_blueprint(client_id= "1034588613988-m8dmbsqf773eh71b78iuu5l8dgn9n2fb.apps.googleusercontent.com", 
                                          client_secret= "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",  scope=[
@@ -19,7 +19,7 @@ google_blueprint = make_google_blueprint(client_id= "1034588613988-m8dmbsqf773eh
     ]
 )
 
-facebook_blueprint = make_facebook_blueprint(client_id= "674312297794894", client_secret= "3afa612ee124eac1cf6ff65ee9c8287c", scope = [
+facebook_blueprint = make_facebook_blueprint(client_id= "998248684493306", client_secret= "c59d13efdfbfad2a37a3b6aadeb05a50", scope = [
     "email"
     ]
 )

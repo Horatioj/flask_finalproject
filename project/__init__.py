@@ -65,4 +65,7 @@ def create_app():
   from .ad import ad as ad_blueprint
   app.register_blueprint(ad_blueprint)
 
+  from .server import server as server_blueprint
+  app.register_blueprint(server_blueprint)
+
   return app

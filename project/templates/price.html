@@ -54,7 +54,7 @@
                         </div>
                         <div class="p-5 pt-0">
                             <h1 class="display-5 mb-3">
-                                <small class="align-top" style="font-size: 22px; line-height: 45px;">$</small>8.88<small
+                                <small class="align-top" style="font-size: 22px; line-height: 45px;">$</small>8.80<small
                                     class="align-bottom" style="font-size: 16px; line-height: 40px;">/ Month</small>
                             </h1>
                             <div class="d-flex justify-content-between mb-3"><span>Data Visualization</span><i class="fa fa-check text-primary pt-1"></i></div>
@@ -62,7 +62,16 @@
                             <div class="d-flex justify-content-between mb-3"><span>Sales Price Suggestion</span><i class="fa fa-check text-primary pt-1"></i></div>
                             <div class="d-flex justify-content-between mb-2"><span>Sales Amount Prediction</span><i class="fa fa-check text-primary pt-1"></i></div>
 
-                            <a href="" class="btn btn-primary py-2 px-4 mt-4">Order Now</a>
+                            <script async
+                              src="https://js.stripe.com/v3/buy-button.js">
+                            </script>
+
+                            <stripe-buy-button
+                              buy-button-id="buy_btn_1Mxu01GGlgefyoZt0qbFXcx3"
+                              publishable-key="pk_test_51Mxi9uGGlgefyoZtAq3hbohiZ5iuEwljH1wL48eHovy7qmkX7e0SZyRG7hojrUYzSemmzwAxUxmZatX5HsgzqMrb000g3KRKpu"
+                            >
+                            </stripe-buy-button>
+<!--                            <a href="{{url_for('server.create_checkout_session')}}" class="btn btn-primary py-2 px-4 mt-4">Order Now</a>-->
 
 
                         </div>
