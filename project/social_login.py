@@ -9,14 +9,16 @@ from sqlalchemy.orm.exc import NoResultFound
 from . import db
 from .models import User, OAuth
 
-github_blueprint = make_github_blueprint(client_id = '', client_secret = '')
+github_blueprint = make_github_blueprint(client_id = , client_secret = )
 
-google_blueprint = make_google_blueprint(client_id= "",
-                                         client_secret= "",  scope=[
+google_blueprint = make_google_blueprint(client_id= ,
+                                         client_secret= ,  scope=[
+
     ]
 )
 
-facebook_blueprint = make_facebook_blueprint(client_id= '', client_secret= '', scope = [
+facebook_blueprint = make_facebook_blueprint(client_id= , client_secret= , scope = [
+
     ]
 )
 
