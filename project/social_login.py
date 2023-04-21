@@ -9,18 +9,14 @@ from sqlalchemy.orm.exc import NoResultFound
 from . import db
 from .models import User, OAuth
 
-github_blueprint = make_github_blueprint(client_id = 'ac3fb707592bbcf390d2', client_secret = '595ababb73b9b04373320ced87d7bd979a03d05e')
+github_blueprint = make_github_blueprint(client_id = '', client_secret = '')
 
-google_blueprint = make_google_blueprint(client_id= "1034588613988-m8dmbsqf773eh71b78iuu5l8dgn9n2fb.apps.googleusercontent.com", 
-                                         client_secret= "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",  scope=[
-        "openid",
-        "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.googleapis.com/auth/userinfo.profile",
+google_blueprint = make_google_blueprint(client_id= "",
+                                         client_secret= "",  scope=[
     ]
 )
 
-facebook_blueprint = make_facebook_blueprint(client_id= "674312297794894", client_secret= "3afa612ee124eac1cf6ff65ee9c8287c", scope = [
-    "email"
+facebook_blueprint = make_facebook_blueprint(client_id= '', client_secret= '', scope = [
     ]
 )
 

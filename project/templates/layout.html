@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Startup - Startup Website Template</title>
+    <title>ISOM4007 Data Analysis Website</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="static/css/style.css" rel="stylesheet">
+    {{ share.load() }}
 </head>
 
 <body>
@@ -59,11 +60,6 @@
         <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
             <a href="{{url_for('query.index')}}" class="navbar-brand p-0">
                 <img class="w-10" src="static/img/logo.png" alt="Image" style="width: 125px; height: 83px">
-                {% if current_user.is_authenticated %}
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-item nav-link">Welcome,  {{ current_user.username }}!</a>
-                </div>
-                {% endif %}
             </a>
 
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -78,7 +74,13 @@
                     <a href="{{url_for('auth.login')}}" class="btn btn-primary py-2 px-4 ms-3" style="display: block;text-align:right;">Login</a>
                 {% endif %}
                 {% if current_user.is_authenticated %}
-                    <a href="{{url_for('auth.logout')}}" class="btn btn-primary py-2 px-4 ms-3" style="display: block;text-align:right;">Logout</a>
+                <div class="dropdown">
+                    <a href="#" class="btn btn-primary py-2 px-4 ms-3" style="display: block;text-align:right;">Welcome,  {{ current_user.username }}!</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" id="btn-abrir-opoup">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Logout</a></li>
+                    </ul>
+                </div>
                 {% endif %}
             </div>
         </nav>
@@ -105,6 +107,23 @@
     <!-- Full Screen Search End -->
 
     <div>
+    <div>
+        <div class="overlay" id="overlay">
+            <div class="popup" id="popup">
+                <a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup"><i class="fas fa-times"></i></a>
+                <h3>Profile Setting</h3>
+                <form action="">
+                    <div class="contenedor-inputs">
+                        <h3>USER NAME: {{ current_user.username }}</h3>
+                        <h3>EMAIL: {{ current_user.email }}</h3>
+                    </div>
+                    <a type="submit" class="btn-submit" href="{{ url_for('auth.reset') }}">Reset Password</a>
+                </form>
+            </div>
+            </div>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link href="static/css/popup.css" rel="stylesheet">
+    </div>
         {% block content %}
 
         {% endblock %}
@@ -167,6 +186,7 @@
                                 <i class="bi bi-telephone text-primary me-2"></i>
                                 <p class="mb-0"><a href="tel:+85367889002">+853 6788 9002</a></p>
                             </div>
+                            {{ share.create(title='Share with: ') }}
                         </div>
                         <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
                             <div class="section-title section-title-sm position-relative pb-3 mb-4">
@@ -228,6 +248,9 @@
 
     <!-- Template Javascript -->
     <script src="static/js/main.js"></script>
+
+    <script src="static/js/popup.js"></script>
+
 </body>
 
 </html>

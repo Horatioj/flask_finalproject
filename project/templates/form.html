@@ -1,14 +1,35 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+			</button>
+			<a href="/" class="navbar-brand">Users Management</a>
+		</div>
+		<div class="navbar-collapse collapse">
+		    <ul class="nav navbar-nav">
+				<li><a href="{{url_for('main.index')}}">Home</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}
 {% block content %}
+
 <html>
     <body>
-        <h1>Admin Form</h1>
-        <form method="POST" action="{{url_for('ad.admin')}}">
+        <h1 align="center">Admin Form</h1>
+        <form method="POST" action="{{url_for('ad.admin')}}" align="center">
             {{form.csrf_token}}
             <p>
-            {{ form.email.label }}
-            {{ form.email(size=128) }}
+            {{ form.email.label }}: &nbsp
+            {{ form.email(size=64) }}
             </p>
 
             {% if form.email.errors %}
@@ -19,8 +40,8 @@
                 </ul>
             {% endif %}
             <p>
-            {{ form.password.label }}
-            {{ form.password(size=50) }}
+            {{ form.password.label }}: &nbsp
+            {{ form.password(size=60) }}
             </p>
 
             {% if form.password.errors %}

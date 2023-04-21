@@ -1,0 +1,46 @@
+{% block body %}
+  <h3 class='text-center text-muted mb-3'>Flask - Database Management</h3>
+<!--  <p class='text-right'><a href='{{url_for("ad.add_db")}}' class='btn btn-success '>Add Record</a></p>-->
+  <table class='table table-bordered'>
+    <thead>
+      <th>ID</th>
+      <th>Streamer Name</th>
+      <th>Sex</th>
+      <th>Product Interest</th>
+      <th>Fans Number</th>
+      <th>Member Number</th>
+      <th>Total Live Number</th>
+      <th>Total Sales Revenue</th>
+      <th>Total Sales Volume</th>
+      <th>Average UV Value</th>
+      <th>Live Number Within 30 Days</th>
+      <th>Average Viewer Number</th>
+      <th>Total Product Conversion Rate</th>
+<!--sex	product_interest	fans_number	member_number	total_live_number -->
+<!--        # totalSales_revenue	totalSales_volume	average_living_time(s)	live_number_within30	averageViewer_number-->
+<!--        # totalProductConversion_rate-->
+    </thead>
+    <tbody>
+      {% for row in datas %}
+        <tr>
+<!--          <td>{{loop.index}}</td>-->
+          <td>{{row.id}}</td>
+          <td>{{row.liveStreamer_name}}</td>
+          <td>{{row.sex}}</td>
+          <td>{{row.product_interest}}</td>
+          <td>{{row.fans_number}}</td>
+          <td>{{row.member_number}}</td>
+          <td>{{row.total_live_number}}</td>
+            <td>{{row.totalSales_revenue}}</td>
+          <td>{{row.totalSales_volume}}</td>
+          <td>{{row.average_uv_value}}</td>
+          <td>{{row.live_number_within30}}</td>
+          <td>{{row.averageViewer_number}}</td>
+          <td>{{row.totalProductConversion_rate}}</td>
+          <td><a href='{{url_for("ad.edit_db",id=row.id)}}' class='btn btn-primary'>Edit</a></td>
+          <td><a href='{{url_for("ad.delete_db",id=row.id)}}' class='btn btn-danger' onclick='return confirm("Are You Sure")'>Delete</a></td>
+        </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+{% endblock %}

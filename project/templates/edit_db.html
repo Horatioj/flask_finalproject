@@ -1,0 +1,60 @@
+{% block body %}
+  <div class='row'>
+    <div class='col-5 mx-auto'>
+      <h3>Edit Database</h3><hr>
+
+    <form method='post' action="{{ url_for('ad.edit_db', id=Sheet1[0]['id']) }}">
+        <div class='form-group'>
+          <label>Streamer Name</label>
+          <input type='text' name='liveStreamer_name' required class='form-control' value="{{Sheet1.liveStreamer_name}}">
+        </div>
+        <div class='form-group'>
+          <label>Sex</label>
+          <input type='text' name='sex' required class='form-control' value="{{Sheet1.sex}}">
+        </div>
+        <div class='form-group'>
+          <label>Product Interest</label>
+          <input type='text' name='product_interest' required class='form-control' value="{{Sheet1.product_interest}}">
+        </div>
+        <div class='form-group'>
+          <label>Fans Number</label>
+          <input type='text' name='fans_number' required class='form-control' value="{{Sheet1.fans_number}}">
+        </div>
+        <div class='form-group'>
+          <label>Member Number</label>
+          <input type='text' name='member_number' required class='form-control' value="{{Sheet1.member_number}}">
+        </div>
+        <div class='form-group'>
+          <label>Total Live Number</label>
+          <input type='text' name='total_live_number' required class='form-control' value="{{Sheet1.total_live_number}}">
+        </div>
+        <div class='form-group'>
+          <label>Total Sales Revenue</label>
+          <input type='text' name='totalSales_revenue' required class='form-control' value="{{Sheet1.totalSales_revenue}}">
+        </div>
+        <div class='form-group'>
+          <label>Total Sales Volume</label>
+          <input type='text' name='totalSales_volume' required class='form-control' value="{{Sheet1.fans_number}}">
+        </div>
+        <div class='form-group'>
+          <label>Average UV Value</label>
+          <input type='text' name='average_uv_value' required class='form-control' value="{{Sheet1.average_uv_value}}">
+        </div>
+        <div class='form-group'>
+          <label>Live Number Within30</label>
+          <input type='text' name='live_number_within30' required class='form-control' value="{{Sheet1.live_number_within30}}">
+        </div>
+        <div class='form-group'>
+          <label>Average Viewer Number</label>
+          <input type='text' name='averageViewer_number' required class='form-control' value="{{Sheet1.averageViewer_number}}">
+        </div>
+        <div class='form-group'>
+          <label>Total Product Conversion Rate</label>
+          <input type='text' name='totalProductConversion_rate' required class='form-control' value="{{Sheet1.totalProductConversion_rate}}">
+        </div>
+
+        <input type='submit' value='Submit' class='btn btn-primary'>
+      </form>
+    </div>
+  </div>
+{% endblock %}

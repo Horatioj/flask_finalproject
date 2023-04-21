@@ -55,30 +55,79 @@
         vertical-align: left;
       }
     
-<!--      /* submit 按钮样式 */-->
-<!--      input[type="submit"] {-->
-<!--        background-color: #e23ed7;-->
-<!--        color: white;-->
-<!--        padding: 12px 20px;-->
-<!--        border: none;-->
-<!--        border-radius: 5px;-->
-<!--        cursor: pointer;-->
-<!--        font-size: 16px;-->
-<!--      }-->
-    
-      /* submit 按钮悬浮效果 */
-      input[type="submit"]:hover {
-        background-color: #ff6feee2;
+/*<!--      !* submit 按钮样式 *!-->*/
+/*<!--      input[type="submit"] {-->*/
+/*<!--        background-color: #e23ed7;-->*/
+/*<!--        color: white;-->*/
+/*<!--        padding: 12px 20px;-->*/
+/*<!--        border: none;-->*/
+/*<!--        border-radius: 5px;-->*/
+/*<!--        cursor: pointer;-->*/
+/*<!--        font-size: 16px;-->*/
+/*<!--      }-->*/
+/*    */
+/*      !* submit 按钮悬浮效果 *!*/
+/*      input[type="submit"]:hover {*/
+/*        background-color: #ff6feee2;*/
+/*      }*/
+
+      .my-btn {
+        background-color: #0077CC;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
       }
 
+      .my-btn:hover {
+        background-color: #005CA8;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+      }
+      .form-group h2, .form-group select {
+        display: inline-block;
+      }
+      .report-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .report-box h2 {
+        margin-top: 0;
+      }
+
+      form {
+        margin-left: 150px; /*将表单向右移动50像素*/
+      }
     </style>
 
   </head>
   <body>
-    <h1>Enter Your Data for Sales Prediction:</h1> 
-    <form action="/predict" method="POST">
-<!--        Search the live streamer:-->
-<!--        <input type="text" id="search-box" placeholder="Search...">-->
+    <h1 align="center">Enter Your Data for Sales Prediction:</h1>
+    <form action="/predict" method="POST" ><br>
+      <div class="form-group">
+        <h2 style="display: inline-block;">Please select the model:&nbsp;&nbsp;&nbsp;</h2>
+        <select id="model_selection" name="model_selection" required style="display: inline-block;">
+          <option value="">Select a model...</option>
+          <option value="1">Ridge Regression</option>
+          <option value="2">Lasso Regression</option>
+          <option value="3">Multi-layer Perceptron (MLP) Neural network</option>
+        </select><br><br>
+      </div>
+      <div class="separator"></div>
       <h2>Basic data:</h2>
       <label for="sex">Sex:</label>
       <label>
@@ -125,20 +174,20 @@
       <label for="total_fans_change">Total Fans Change:</label>
       <input type="number" step="0.01" id="total_fans_change" name="total_fans_change" value="-220926" required>
 
-      <label for="total_video_number">Total Video Number:</label>
+      <label for="total_video_number">Total Videos Number:</label>
       <input type="number" step="0.01" min="0" id="total_video_number" name="total_video_number" value="13" required><br><br>
 
       <label for="average_videoLike_number">Average VideoLike Number:</label>
       <input type="number" step="0.01" min="0"id="average_videoLike_number" name="average_videoLike_number" value="230316" required>
 
-      <label for="average_videoViewe_number">Average VideoViewe Number:</label>
-      <input type="number" step="0.01" min="0"id="average_videoViewe_number" name="average_videoViewe_number" value="13098937" required><br><br>
+      <label for="average_videoViewe_number">Average VideoViewer Number:</label>
+      <input type="number" step="0.01" min="0"id="average_videoViewe_number" name="average_videoViewe_number" value="13098937" required>
 
       <label for="average_videoComment_number">Average Comment Number per video:</label>
-      <input type="number" step="0.01" min="0"id="average_videoComment_number" name="average_videoComment_number" value="11866" required>
+      <input type="number" step="0.01" min="0"id="average_videoComment_number" name="average_videoComment_number" value="11866" required><br><br>
 
       <label for="average_femaleFans_rate">Average Female Fans Rate:</label>
-      <input type="number" step="0.01" min="0"id="average_femaleFans_rate" name="average_femaleFans_rate" value="11.06" required><br><br>
+      <input type="number" step="0.01" min="0"id="average_femaleFans_rate" name="average_femaleFans_rate" value="11.06" required>
   
       <label for="average_maleFans_rate">Average Male Fans Rate:</label>
       <input type="number" step="0.01" min="0"id="average_maleFans_rate" name="average_maleFans_rate" value="88.94" required><br><br>
@@ -200,21 +249,21 @@
       <option value="3">Beauty & Skincare</option>
       <option value="4">Food & Beverages</option>
       <option value="5">Household Products</option>
-      </select>
+      </select><br><br>
 
-      <script>
-      const selectElement = document.querySelector('#product_interest');
-      selectElement.addEventListener('change', (event) => {
-          const options = selectElement.options;
-          for (let i = 0; i < options.length; i++) {
-          if (options[i].value === event.target.value) {
-              options[i].value = 1;
-          } else {
-              options[i].value = 0;
-          }
-          }
-      });
-      </script>
+<!--      <script>-->
+<!--      const selectElement = document.querySelector('#product_interest');-->
+<!--      selectElement.addEventListener('change', (event) => {-->
+<!--          const options = selectElement.options;-->
+<!--          for (let i = 0; i < options.length; i++) {-->
+<!--          if (options[i].value === event.target.value) {-->
+<!--              options[i].value = 1;-->
+<!--          } else {-->
+<!--              options[i].value = 0;-->
+<!--          }-->
+<!--          }-->
+<!--      });-->
+<!--      </script>-->
 
 <!--      <label for="hour_day">Start time:</label>-->
 <!--      <select id="hourSelect" onchange="updateSelectedOption()" required>-->
@@ -259,8 +308,19 @@
           }
           }
       </script>
-      Predictions: {{result}} <br>
-      <input type="submit" value="Predict">
+
+          <div class="button-container">
+                <input class="my-btn" type="submit" value="Predict">
+          </div>>
+
+          <br><br>
+          <div class="report-box">
+            <h2>Report for the sales prediction:</h2><br><br>
+            <p>The predicted sales amount for next live streaming is {{result}} </p><br>
+            <p>{{report_message}}</p>
+
+          </div>
+
     </form>
     <script>
 		// 表单提交时进行空缺检查

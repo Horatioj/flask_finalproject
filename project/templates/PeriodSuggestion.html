@@ -31,8 +31,37 @@
         }
     
     </script>
+	<style>
+		input[type=submit] {
+		background-color: #6CABDD;
+		color: white;
+		padding: 14px 20px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		width: 100%;
+		}
+
+		input[type=submit]:hover {
+		background-color: #F6EB61;
+		}
+
+		input[type=reset] {
+		background-color: #1C2C5B;
+		color: white;
+		padding: 14px 20px;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		width: 100%;
+		}
+
+		input[type=reset]:hover {
+		background-color: #c0c0c0;
+		}
+	</style>
 <body>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles_period.css') }}">
 	</br>
 	<h1>Period Suggestion</h1>
 	<form method="POST" action="{{ url_for('query.PeriodSuggestion')}}">
@@ -54,7 +83,7 @@
         <input type="checkbox" id="input_value8" name="input_value" value="Food & Beverages" onclick="disableOtherCheckboxes(this)">
         <label for="input_value8">Food & Beverages</label>
         <input type="checkbox" id="input_value9" name="input_value" value="Fresh Produces" onclick="disableOtherCheckboxes(this)">
-        <label for="input_value9">Fresh Produces</label><br>
+        <label for="input_value9">Fresh Produces</label>
         <input type="checkbox" id="input_value10" name="input_value" value="Furnitures/Materials" onclick="disableOtherCheckboxes(this)">
         <label for="input_value10">Furnitures/Materials</label>
         <input type="checkbox" id="input_value11" name="input_value" value="Gifts" onclick="disableOtherCheckboxes(this)">
@@ -76,7 +105,7 @@
         <input type="checkbox" id="input_value19" name="input_value" value="Shoes/Bags" onclick="disableOtherCheckboxes(this)">
         <label for="input_value19">Shoes/Bags</label>
         <input type="checkbox" id="input_value20" name="input_value" value="Sports" onclick="disableOtherCheckboxes(this)">
-        <label for="input_value20">Sports<br>
+		<label for="input_value20">Sports</label>
         <input type="checkbox" id="input_value21" name="input_value" value="Textiles" onclick="disableOtherCheckboxes(this)">
         <label for="input_value21">Textiles</label>
         <input type="checkbox" id="input_value22" name="input_value" value="Toys/Musical Instrument" onclick="disableOtherCheckboxes(this)">
@@ -142,8 +171,8 @@
         <input type="reset" value="Reset" onclick="resetForm()">
 	</form>
     {% if result %}
-        <br><br>
-        <p id="result">{{ result }} </p>
+        <br>
+        <h4 id="result" align="center">{{ result }} </h4>
     {% endif %}
 	</body>
 </html>

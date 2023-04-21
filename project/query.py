@@ -28,7 +28,7 @@ def about():
     return render_template('about.html', title='about', active='about')
 
 @query.route('/service')
-@login_required
+# @login_required
 def service():
     return render_template('service.html', title='service', active='service')
 
@@ -52,25 +52,33 @@ def DataVisualization():
 def SelectStreamer():
     return render_template('SelectStreamer.html', title='Select Streamer')
 
-df1 = pd.read_excel('project/data/period.xlsx')
+
 @query.route('/PeriodSuggestion', methods=['GET', 'POST'])
 def PeriodSuggestion():
     result = ''
+    input_value = 'All'
+    start_time = 0
+    end_time = 0
 
     if request.method == 'POST':
-        global df1
         input_value = request.form['input_value']
         start_time = int(request.form['start_time'])
         end_time = int(request.form['end_time'])
 
-        df = df1[((df1['start_time']) >= start_time) & ((df1['end_time']) <= end_time)]
+    if input_value != 'All':
+        df = pd.read_excel('project/data/period.xlsx')
+        df = df.loc[df["類別"] == input_value]
 
-        group = df.groupby('類別')
-        value_counts = group['start_time'].value_counts()
-        result = int(value_counts.groupby(level=0).apply(lambda x: x.idxmin()[1]).loc[input_value])
-        # result = value_counts.groupby(level=0).apply(lambda x: x[x == x.min()].index[0][1]).loc[input_value]
-        # result = df[df['類別'] == input_value]['start_time'].value_counts().idxmin()
-
+        df = df[(df['start_time'] >= start_time) & (df['end_time'] <= end_time)]
+        if df.empty:
+            result = ""
+            result = f"There are no live-streaming in this time period{result}"
+            return render_template('PeriodSuggestion.html', result=result, title='Streaming Period Suggestion')
+        time_counts = df['start_time'].value_counts()
+        min_count = time_counts.min()
+        min_value = time_counts[time_counts == min_count].index[0]
+        min_row = df[df['start_time'] == min_value].iloc[0]
+        result = int(min_row['start_time'])
         result = f"We recommend starting the live-streaming at {result}:00"
 
     return render_template('PeriodSuggestion.html', result=result, title='Streaming Period Suggestion')
@@ -78,27 +86,44 @@ def PeriodSuggestion():
 @query.route('/PriceSuggestion')
 def PriceSuggestion():
     result = ''
+    return render_template('PriceSuggestion2.html', **locals())
+
+
+@query.route('/PriceSug', methods=['GET', 'POST'])
+def PriceSug():
+    result = ''
 
     if request.method == 'POST':
-        global df1
-        input_value = request.form['input_value']
-        cost_value = request.form['cost_value']
-        profit_value = request.form['profit_value']
+        df1 = pd.read_excel('project/data/product.xlsx')
+        category = request.form['category']
+        costing = float(request.form['costing'])
+        profit_margin = float(request.form['profit_margin'])
+        selling_price = request.form['selling_price']
+        price = costing * ((100 + profit_margin) / 100)
 
-        price = int(cost_value) + int(profit_value)
+        total = 0
+        count = 0
+        for i in range(len(df1)):
+            if df1['category'][i] == category:
+                total += df1['price'][i]
+                count += 1
+        ave_SellPrice = total / count
 
-        group = df1.groupby('類別')
-        average_value = group.mean().loc[input_value, '價錢']
-
-        if float(price) > average_value:
-            result = 'Selling Price: Not Reasonable{}, Reason: Not enough profit margin, Suggested Price: {:.2f}'.format(
-                price, average_value)
-        elif float(price) == average_value:
-            result = 'Reasonable, good luck'
+        if (selling_price == 'OPTIONAL'):
+            selling_price = 0
+            result = "The suggested selling price is: ${:.2f}, The average selling price in the database is ${:.2f}".format(price, ave_SellPrice)
         else:
-            result = 'Reasonable, Suggested Price: {:.2f}'.format(average_value)
+            selling_price = float(selling_price)
+            if float(selling_price) > price:
+                result = "The selling price is NOT REASONABLE as it exceeded the profit margin, the suggested selling price is: ${:.2f},  " \
+                         "The average selling price in the database file is: ${:.2f}".format(price, ave_SellPrice)
+            elif float(selling_price) == price:
+                result = "The selling price is REASONABLE. The average selling price in the database file is: ${:.2f}".format(ave_SellPrice)
+            else:
+                result = "The selling price is NOT REASONABLE as it has not enough profit margin, the suggested selling price is: ${:.2f} " \
+                         "The average selling price in the database file is: ${:.2f}".format(price, ave_SellPrice)
 
-    return render_template('PriceSuggestion.html', result=result, title='Price Suggestion')
+    return render_template('PriceSuggestion2.html', title='Price Suggestion', **locals())
 
 @query.route('/SalesPrediction', methods=['GET', 'POST'])
 def SalesPrediction():
@@ -107,9 +132,18 @@ def SalesPrediction():
 
 @query.route('/predict', methods=['GET', 'POST'])
 def predict():
-    model = pickle.load(open('project/modelproj.sav', 'rb'))
-    # Use the loaded model to make predictions
     # Basic information/data
+    modelSelection = int(request.form['model_selection'])    # Use the loaded model to make predictions
+    if modelSelection == 1:
+        model = pickle.load(open('project/modelprojRidge.sav', 'rb'))
+        report_message = 'Ridge regression is a type of regularized linear regression model used in statistics and machine learning. ' \
+                         'It is a modification of the ordinary least squares (OLS) regression method that adds a penalty term to the ' \
+                         'regression equation in order to avoid overfitting and improve the predictive accuracy.'
+    elif modelSelection == 2:
+        model = pickle.load(open('project/modelLasso.sav', 'rb'))
+    elif modelSelection == 3:
+        model = pickle.load(open('project/modelprojNN.sav', 'rb'))
+
     gender = int(request.form['sex'])
     FansNumber = float(request.form['fans_number'])
     MemNumber = float(request.form['member_number'])
@@ -148,6 +182,22 @@ def predict():
     FeFansProp = float(request.form['femaleFans_rate'])
     MaFansProp = float(request.form['maleFans_rate'])
     ProdInterest = float(request.form['product_interest'])
+    # set the variable for product interest
+    Apparel = 0
+    Baby = 0
+    Beauty = 0
+    Food = 0
+    Household = 0
+    if ProdInterest == 1:
+        Apparel = 1;
+    elif ProdInterest == 2:
+        Baby = 1;
+    elif ProdInterest == 3:
+        Beauty = 1;
+    elif ProdInterest == 4:
+        Food = 1;
+    elif ProdInterest == 5:
+        Household = 1;
     # StartTime = request.form['hourSelect']
 
     result = model.predict([[gender, FansNumber, MemNumber, TotLiNumber, TotSaRev, TotSaVol, LiNum30, TotProConvRate,
@@ -156,7 +206,7 @@ def predict():
                              AveFeFansRate, AveMaFansRate, LiTime, ViNum, prodNum,
                              ComNum, SaNum, IncFansNum, VibecomeFansRate, NumLik, ProdConRate, AveSaperPerson, UValue,
                              NumLuckybags, AvestayTimeperPerson, InteractionRate, FeFansProp,
-                             MaFansProp]])[0]
+                             MaFansProp, Apparel, Baby, Beauty, Food, Household]])[0]
 
     return render_template('SalesAmountPrediction1.html', title='Sales Prediction', **locals())
 

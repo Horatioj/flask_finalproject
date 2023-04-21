@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+  <head>
+    <title>Buy our Data Analysis Access</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <div class="product">
+        <img src="https://masterthecrypto.com/wp-content/uploads/2019/11/quantitative-trading.jpg" alt="Data Analysis Plan" />
+        <div class="description">
+          <h3>Data Analysis Plan</h3>
+          <h5>MOP 8.80</h5>
+        </div>
+      </div>
+      <form action="/create-checkout-session" method="POST">
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form>
+    </section>
+  </body>
+</html>
+{% endblock %}

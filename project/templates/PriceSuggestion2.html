@@ -1,0 +1,119 @@
+﻿{% extends 'layout.html' %}
+{% block content %}
+<!-- Navbar Start -->
+        <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
+            <div class="row py-5">
+                <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-4 text-white animated zoomIn">Services</h1>
+                    <a href="" class="h5 text-white">Home</a>
+                    <i class="far fa-circle text-white px-2"></i>
+                    <a href="" class="h5 text-white">Services</a>
+                </div>
+            </div>
+        </div>
+    <!-- Navbar End -->
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+    <title>Suggested Selling Price Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_search.css') }}">
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <h1 align="center">Suggested Selling Price Calculator</h1><br><br><br>
+
+    <h2 align="center">Please select a product category:</h2>
+    <form align="center" method="POST" action="{{url_for('query.PriceSug')}}">
+        <input type="radio" id="category1" name="category" value="Apparel" checked>
+        <label for="category1">Apparel</label>
+
+        <input type="radio" id="category2" name="category" value="Beauty & Skincare">
+        <label for="category2">Beauty & Skincare</label>
+
+        <input type="radio" id="category3" name="category" value="Food & Beverages">
+        <label for="category3">Food & Beverages</label>
+
+        <input type="radio" id="category4" name="category" value="Household Products">
+        <label for="category4">Household Products</label>
+
+<!--        <input type="radio" id="category5" name="category" value="BabyCare">-->
+<!--        <label for="category5">Baby Care Products</label><br /><br /><br />-->
+
+    <br>
+        <label for="costing">Costing ($):</label>
+        <input type="number" id="costing" name="costing" step="0.01" required><br><br>
+
+        <label for="profit_margin">Profit Margin (%):</label>
+        <input type="number" id="profit_margin" name="profit_margin" step="0.01" required><br><br>
+
+        <label for="selling_price">Selling Price ($):</label>
+        <input type="text" id="selling_price" name="selling_price" step="0.01" placeholder="***OPTIONAL***" value="OPTIONAL"><br><br><br>
+
+        <h3>Suggestions: {{result}}</h3> <br>
+        <input type="submit" value="Calculate">
+<!--        <button type="button" onclick="calculate()">Calculate</button><br /><br /><br />-->
+    </form>
+
+<!--    <h2 align="center">Suggested Selling Price:<br></h2>-->
+<!--    <span id="result"></span><br>-->
+ 
+
+    <script>
+        function calculate() {
+            const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+            const costing = parseFloat(document.getElementById('costing').value);
+            const profitMargin = parseFloat(document.getElementById('profit-margin').value);
+            let sellingPrice = document.getElementById('selling-price').value;
+
+            if (isNaN(costing) || isNaN(profitMargin)) {
+                alert("Please enter numbers!");
+                return;
+            }
+
+            if (sellingPrice) {
+                sellingPrice = parseFloat(sellingPrice);
+            }
+
+            const suggestedSellingPrice = costing * ((100 + profitMargin) / 100);
+
+            // Load the SheetJS library
+            var XLSX = require('xlsx');
+
+            // Load the Excel file and calculate the average selling price of the selected category
+            fetch('product.xlsx')
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    var workbook = XLSX.read(data, { type: 'array' });
+                    var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    var jsonData = XLSX.utils.sheet_to_json(firstSheet);
+
+                    let total = 0;
+                    let count = 0;
+                    for (let i = 0; i < jsonData.length; i++) {
+                        if (jsonData[i].category == selectedCategory) {
+                            total += jsonData[i].price;
+                            count++;
+                        }
+                    }
+                    const averageSellingPrice = total / count;
+
+                    let resultMessage = "";
+                    if (!sellingPrice) {
+                        resultMessage = "The suggested selling price is: " + suggestedSellingPrice + "<br> The average selling price in the database file is: " + averageSellingPrice;
+                    } else if (sellingPrice == suggestedSellingPrice) {
+                        resultMessage = "The selling price is REASONABLE." + "<br> The average selling price in the database file is: " + averageSellingPrice;
+                    } else if (sellingPrice > suggestedSellingPrice) {
+                        resultMessage = "The selling price is NOT REASONABLE as it exceeded the profit margin, the suggested selling price is: $" + suggestedSellingPrice.toFixed(2) + "<br> The average selling price in the database file is: " + averageSellingPrice;
+                    } else {
+                        resultMessage += "The selling price is NOT REASONABLE as it has not enough profit margin, the suggested selling price is: $" + suggestedSellingPrice.toFixed(2) + "<br> The average selling price in the database file is: " + averageSellingPrice;
+                    }
+                    document.getElementById("result").innerHTML = resultMessage;
+                });
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

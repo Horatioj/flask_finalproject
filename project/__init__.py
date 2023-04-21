@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
+from flask_share import Share
 import os 
 from flask_bootstrap import Bootstrap
 
@@ -12,6 +13,7 @@ db = SQLAlchemy()
 jwt = JWTManager()
 mail = Mail()
 bootstrap = Bootstrap()
+share = Share()
 
 def create_app():
   app = Flask(__name__)
@@ -22,8 +24,8 @@ def create_app():
   app.config['MAIL_PORT'] = 465
   app.config['MAIL_USE_TLS'] = False
   app.config['MAIL_USE_SSL'] = True
-  app.config['MAIL_USERNAME'] = 'suichenchao@gmail.com'
-  app.config['MAIL_PASSWORD'] = "tgkldttsnwaonvzr"
+  app.config['MAIL_USERNAME'] = ''
+  app.config['MAIL_PASSWORD'] = ''
 
   db.init_app(app)
 
@@ -34,6 +36,7 @@ def create_app():
   jwt.init_app(app)
   mail.init_app(app)
   bootstrap.init_app(app)
+  share.init_app(app)
 
   from .models import User, OAuth
 
@@ -64,5 +67,8 @@ def create_app():
 
   from .ad import ad as ad_blueprint
   app.register_blueprint(ad_blueprint)
+
+  from .server import server as server_blueprint
+  app.register_blueprint(server_blueprint)
 
   return app

@@ -33,7 +33,7 @@ input[type=checkbox] {
 }
 
 input[type=submit] {
-    background-color: #4CAF50;
+    background-color: #6CABDD;
     color: white;
     padding: 14px 20px;
     border: none;
@@ -43,11 +43,11 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #F6EB61;
 }
 
 input[type=reset] {
-    background-color: #FF0000;
+    background-color: #1C2C5B;
     color: white;
     padding: 14px 20px;
     border: none;
@@ -57,26 +57,20 @@ input[type=reset] {
 }
 
 input[type=reset]:hover {
-    background-color: #D10000;
+    background-color: #c0c0c0;
 }
-
-#results {
-    margin-top: 20px;
-}
-
 
 #range-slider {
     width: 100%;
-  }
-
-#result {
-    text-align: center;
-    font-size: 24px;
-    border: 2px solid black;
-    padding: 10px;
-    margin: 20px auto;
-    width: 50%;
 }
 
-
-
+#result {
+    border: 10px solid #ccc; /* 添加边框 */
+    padding: 20px; /* 添加内边距 */
+    text-align: center; /* 文字居中 */
+    max-width: 800px; /* 最大宽度 */
+    margin: 0 auto; /* 水平居中 */
+    font-size: 1.8rem; /* 字体大小 */
+    line-height: 1.5; /* 行高 */
+    background-color: #f7f7f7; /* 背景颜色 */
+}

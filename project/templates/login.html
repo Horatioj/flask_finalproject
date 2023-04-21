@@ -48,10 +48,9 @@
           <div class="col-md-6 text-center">
             <button type="submit" class="btn btn-primary btn-block"> Login</button>
           </div>
-          <div class="col-md-6 text-left">
-            <a href="{{url_for('ad.admin')}}" style="color:white"> Login as Admin</a>
-          </div>
           <div class="col-md-12 text-right">
+              <a href="{{url_for('ad.admin')}}" style="color:Red"> Login as Admin</a>
+              <br>
               <a class="small" href="{{ url_for('auth.reset') }}">Forgot password?</a>
           </div>                                               
       </div>                                                                 
