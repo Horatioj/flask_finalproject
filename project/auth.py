@@ -64,11 +64,11 @@ def reset_verified(token):
 
   password = request.form.get('password')
   # if len(password or ()) < 8:
-  #   flash('Your password needs to be at least 8 characters', 'error')     
+  #   flash('Your password needs to be at least 8 characters', 'error')
   if password:
     hashed_password = generate_password_hash(password, method='sha256')
     user.password = hashed_password
-
+    # db.session.update()
     db.session.commit()
     flash('Your password has been updated! You are now able to log in', 'success')
     return redirect(url_for('auth.login'))
